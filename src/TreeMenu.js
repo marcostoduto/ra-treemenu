@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import LabelIcon from '@material-ui/icons/Label';
-import { MenuItemLink, getResources, translate, DashboardMenuItem } from 'react-admin';
+import { MenuItemLink, getResources, translate, DashboardMenuItem, useTranslate } from 'react-admin';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
@@ -22,7 +22,7 @@ const Menu = ({
     logout,
     ...rest
 }) => {
-
+    const mytranslate = useTranslate();
     const handleToggle = (parent) => {
         setState(state => ({ [parent]: !state[parent] }));
     };
@@ -49,7 +49,10 @@ const Menu = ({
                     handleToggle={() => handleToggle(parentResource.name)}
                     isOpen={state[parentResource.name]}
                     sidebarIsOpen={open}
-                    name={parentResource.options.label}
+                    name={(parentResource.options && parentResource.options.label) ||
+                        mytranslate(`resources.${parentResource.name}.name`, {
+                            smart_count: 2,
+                        })}
                     icon={parentResource.icon ? <parentResource.icon /> : <LabelIcon />}
                     dense={dense}
                 >
@@ -60,7 +63,10 @@ const Menu = ({
                                 <MenuItemLink
                                     key={childResource.name}
                                     to={`/${childResource.name}`}
-                                    primaryText={childResource.options.label}
+                                    primaryText={(childResource.options && childResource.options.label) ||
+                                        mytranslate(`resources.${childResource.name}.name`, {
+                                            smart_count: 2,
+                                        })}
                                     leftIcon={
                                         childResource.icon ? <childResource.icon /> : <DefaultIcon />
                                     }
@@ -82,7 +88,10 @@ const Menu = ({
                 <MenuItemLink
                     key={independentResource.name}
                     to={`/${independentResource.name}`}
-                    primaryText={independentResource.options.label}
+                    primaryText={(independentResource.options && independentResource.options.label) ||
+                        mytranslate(`resources.${independentResource.name}.name`, {
+                            smart_count: 2,
+                        })}
                     leftIcon={
                         independentResource.icon ? <independentResource.icon /> : <DefaultIcon />
                     }
@@ -93,7 +102,7 @@ const Menu = ({
     );
     return (
         <div>
-            <div style={{marginTop: '10px'}} className={classnames(classes.main, className)} {...rest}>
+            <div style={{ marginTop: '10px' }} className={classnames(classes.main, className)} {...rest}>
                 {hasDashboard && <DashboardMenuItem onClick={onMenuClick} />}
                 {resRenderGroup}
             </div>
