@@ -1,9 +1,9 @@
 {
-  "name": "@bb-tech/ra-treemenu",
+  "name": "@marcostoduto/ra-treemenu",
   "version": "1.0.2",
   "description": "A tree-like menu implementation for react-admin applications.",
   "author": "BigBasket Tech",
-  "repository": "BigBasket/ra-treemenu",
+  "repository": "marcostoduto/ra-treemenu",
   "license": "MIT",
   "keywords": [
     "ra-tree",
@@ -66,5 +66,8 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  }
 }
